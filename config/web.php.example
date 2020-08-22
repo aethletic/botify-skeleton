@@ -1,0 +1,47 @@
+<?php
+
+return [
+  /**
+   * Секретный ключ для авторизации
+   */
+  'secret.key' => 'hackme',
+
+  /**
+   * Показывать ошибки на сайте
+   */
+  'debug' => true,
+
+  /**
+   * Цена за одного подписчика
+   */
+  'price.mailing.user' => 0.10,
+  'price.native.user' => 0.10,
+
+  /**
+   * Юзернейм контактного лица по рекламе
+   */
+  'ad.contact' => 'username',
+
+  /**
+   * Кастомизация шаблона сайта
+   */
+  'header.logo.text' => 'botify.',
+  'color.white' => '#ffffff',
+  'color.primary' => '#af5cf7',
+  'color.primary.dark' => '#a142f4',
+  'color.primary.light' => '#c58af9',
+  'color.card.background' => '#ffff',
+  'color.card.text' => '#ffffff',
+  'color.background' => '#fbfbfb',
+  'color.navbar' => '#3f434d',
+  'color.logo.background' => '#3f434d',
+  'color.logo.text' => '#ffffff',
+  'color.primary.text' => '#66637A',
+  'color.primary.light.text' => '#c3c3c3',
+  'color.text.light.gray' => '#eeeeee',
+  'color.body.text' => '#66637A',
+  'color.scroll.bar' => '#3f434d',
+  'color.scroll.bar.background' => '#c6c6c6',
+  'color.pre.print' => '#a1649e',
+  'color.left.menu.item' => '#66637A',
+];

@@ -1,0 +1,26 @@
+{% block header %}
+<div class="row bg-light-gray d-none d-md-block">
+  <div class="col">
+    <div class="row">
+      <a href="{{ BASE_PATH }}" class="just-link text-white col col-md-auto  logo p-3 mt-3 mx-3  card-hover">
+        <div class="mb-0 h2 font-weight-bold overflow-dots">
+          <i class="fab fa-telegram-plane"></i> botify.
+        </div>
+      </a>
+
+      <div class="col mt-3">
+        <div class="ml-auto float-right">
+          {% if CAN_VIEW %}
+          <span class="text-light-gray-botify"><i class="fad fa-eye"></i> Есть доступ к просмотру</span>
+          {% elseif IS_ADMIN %}
+          <span class="text-light-gray-botify">Администратор</span>
+          {% else %}
+          <a href="{{ BASE_PATH }}/login" class="btn btn-link" style="text-decoration: none;">Войти</a>
+          {% endif %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

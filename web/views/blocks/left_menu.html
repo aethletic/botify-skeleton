@@ -1,0 +1,15 @@
+{% block left_menu %}
+<div class="col-12 col-lg-3 col-xl-2 mt-3 d-none d-md-block" style="">
+  <div class="card shadow-card border-0 bg-purple sticky-top" style="top: 17px;">
+    <ul class="list-group list-group-flush bg-transparent" style="list-style-type: none;">
+      <li class="border-bottom mb-0 p-3 h6 rounded-top">Меню</li>
+      <a href="{{ BASE_PATH }}/dashboard" class="card-link card-hover pointer m-0 list-group-item"><i class="fal fa-angle-right float-right mt-1"></i> Обзор</a>
+      <a href="{{ BASE_PATH }}/messages" class="card-link card-hover pointer m-0 list-group-item"><i class="fal fa-angle-right float-right mt-1"></i> Сообщения <span class="badge badge-primary-light mt-1">{{ messages_count }}</span></a>
+      <a href="{{ BASE_PATH }}/users" class="card-link card-hover pointer m-0 list-group-item"><i class="fal fa-angle-right float-right mt-1"></i> Пользователи <span class="badge badge-primary-light mt-1 ">{{ users_count }}</span></a>
+      <a href="{{ BASE_PATH }}/advertiser" class="card-link card-hover pointer m-0 list-group-item"><i class="fal fa-angle-right float-right mt-1"></i> Рекламодателям</a>
+      <a href="{{ BASE_PATH }}/login" class="card-link card-hover pointer m-0 list-group-item"><i class="fal fa-angle-right float-right mt-1"></i> Авторизация</a>
+      <a href="{{ BASE_PATH }}/settings" class="card-link card-hover pointer m-0 list-group-item"><i class="fal fa-angle-right float-right mt-1"></i> Настройки</a>
+    </ul>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,208 @@
+{% extends "src/base.html" %}
+
+{% block title %}Сообщения - botify.{% endblock %}
+
+{% block head %}
+  {{ parent() }}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />
+{% endblock%}
+
+{% block content %}
+
+{{ block("navbar", "blocks/navbar.html") }}
+
+<div class="container-fluid">
+
+  {{ block("header", "blocks/header.html") }}
+
+  <div class="row">
+
+    {{ block("left_menu", "blocks/left_menu.html") }}
+
+    <div class="col-12 col-lg mb-3 animate__animated animate__fadeIn">
+      <p class="h4 font-weight-bold mt-3 mb-3">Сообщения</p>
+      <div class="row">
+        <div class="col-12 col-md-8">
+          <div class="row" id="messages">
+
+            {% if messages_data is empty %}
+            <div class="col-12">
+
+                Ничего не найдено, попробуйте изменить настройки фильтра.
+
+            </div>
+            {% else %}
+
+            {% for message in messages_data %}
+            <div class="col-12">
+              <div class="shadow-card bg-white rounded card-body mb-0 {%if loop.first == false%}mt-3{%endif%}">
+                <div class="row">
+                  <div class="col">
+                    <div class="row no-gutters">
+                      <div class="col-auto font-weight-bold">
+                        {% if CAN_VIEW or IS_ADMIN %}
+							            {{ message.user}}
+												{% else %}
+													{{ message.user | hide_value }}
+												{% endif %}
+                      </div>
+                      <small class="col-lg-12 col-xl-auto  ml-xl-auto text-muted">
+                        <i class="fad fa-calendar-alt"></i> {{ message.date | date("d.m.Y H:i:s") }}
+                      </small>
+                      <small class="col-12 mt-2 text-muted ">
+                        {% if CAN_VIEW or IS_ADMIN %}
+												<pre class="pre-print">{{ message.print }}</pre>
+												{% else %}
+													<pre class="pre-print">Нет прав для просмотра текста сообщения.</pre>
+												{% endif %}
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="col-12 order-first order-md-last col-md-4 mb-3 mt-md-0">
+          <div class="sticky-top z-index-999" style="top: 17px;">
+            <div class="card card-body border-0 shadow-card">
+              <div class="row">
+
+                <div class="col-12">
+                  <label for="q" class="mb-1">Поиск</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fad fa-search"></i></div>
+                    </div>
+                      <input id="q" type="text" class="form-control" placeholder="Поиск по сообщениям">
+                  </div>
+                </div>
+
+                <div class="col-12 mt-3">
+                  <label for="date" class="mb-1">Дата</label>
+                  <div class="input-group date">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fad fa-calendar-alt"></i></div>
+                    </div>
+                      <input id="date" type="text" class="form-control" placeholder="За всё время"><span class="input-group-addon"></span>
+                  </div>
+                </div>
+
+                <div class="col-12 mt-3">
+                  <label for="user" class="mb-1">Пользователь</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fad fa-user"></i></div>
+                    </div>
+                      <input id="user" type="text" class="form-control" placeholder="Идентификатор пользователя">
+                  </div>
+                </div>
+
+                <div class="col-12 mt-3">
+                  <button id="apply" class="btn btn-purple btn-block" type="button">Применить</button>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ru.min.js" integrity="sha512-tPXUMumrKam4J6sFLWF/06wvl+Qyn27gMfmynldU730ZwqYkhT2dFUmttn2PuVoVRgzvzDicZ/KgOhWD+KAYQQ==" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+  $('.input-group.date').datepicker({
+      format: "dd.mm.yyyy",
+      todayBtn: "linked",
+      clearBtn: true,
+      language: "ru",
+      autoclose: true,
+      todayHighlight: true
+  });
+
+  var inProgress = false;
+  var data = {};
+
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const user_id = urlParams.get('user_id');
+
+  data.page = 1;
+  data.date = '';
+  data.user = user_id;
+  data.q    = '';
+
+  $("#user").val(user_id);
+
+  $(window).scroll(function() {
+    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 200 && !inProgress && data.page !== false) {
+        data.is_more = true;
+        $.ajax({
+                url: `{{ BASE_PATH }}/messages`,
+                method: 'POST',
+                data: JSON.stringify(data),
+                beforeSend: function() {
+                    inProgress = true;
+                }
+            })
+            .done(function(res) {
+              res = JSON.parse(res);
+
+              if (res['nextPage'] == false) {
+                  data.page = false;
+              } else {
+                  data.page += 1;
+                  $("#messages").append(res['content']);
+              }
+
+              res = false;
+              inProgress = false;
+            });
+    }
+  });
+
+  $("#apply").click(function () {
+    data.page = 0;
+    data.date = $("#date").val();
+    data.user = $("#user").val();
+    data.q = $("#q").val();
+    data.is_more = false;
+
+    $.ajax({
+            url: `{{ BASE_PATH }}/messages`,
+            method: 'POST',
+            data: JSON.stringify(data),
+            beforeSend: function() {
+                inProgress = true;
+            }
+        })
+        .done(function(res) {
+          res = JSON.parse(res);
+
+          if (res['nextPage'] == false) {
+              data.page = false;
+          } else {
+              data.page += 1;
+          }
+
+          $("#messages").html(res['content']);
+
+          res = false;
+          inProgress = false;
+        });
+  });
+</script>
+{% endblock %}

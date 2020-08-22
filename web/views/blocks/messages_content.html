@@ -1,0 +1,40 @@
+{% block header %}
+{% if messages_data is empty %}
+<div class="col-12">
+
+  Сообщения не найдены, попробуйте изменить настройки фильтра.
+
+</div>
+{% else %}
+  {% for message in messages_data %}
+  <div class="col-12">
+    <div class="shadow-card bg-white rounded card-body mb-0 {%if loop.first == false or is_more == true %}mt-3{%endif%}">
+      <div class="row">
+        <div class="col">
+          <div class="row no-gutters">
+            <div class="col-auto font-weight-bold">
+              {% if CAN_VIEW or IS_ADMIN %}
+                {{ message.user}}
+              {% else %}
+                {{ message.user | hide_value }}
+              {% endif %}
+            </div>
+            <small class="col-lg-12 col-xl-auto  ml-xl-auto text-muted">
+              <i class="fad fa-calendar-alt"></i> {{ message.date | date("d.m.Y H:i:s") }}
+            </small>
+            <small class="col-12 mt-2 text-muted ">
+              {% if CAN_VIEW or IS_ADMIN %}
+              <pre class="pre-print">{{ message.print }}</pre>
+              {% else %}
+                <pre class="pre-print">Нет прав для просмотра текста сообщения.</pre>
+              {% endif %}
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+{% endif %}
+
+{% endblock %}

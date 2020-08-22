@@ -1,0 +1,364 @@
+{% extends "src/base.html" %}
+
+{% block title %}Рекламодателям - botify.{% endblock %}
+
+{% block content %}
+
+{{ block("navbar", "blocks/navbar.html") }}
+
+<div class="container-fluid">
+
+	{{ block("header", "blocks/header.html") }}
+
+	<div class="row">
+
+		{{ block("left_menu", "blocks/left_menu.html") }}
+
+		<div class="col-12 col-lg mb-3 animate__animated animate__fadeIn">
+			<p class="h4 font-weight-bold mt-3 mb-3">Немного цифр</p>
+
+			<div class="row">
+				<div class="col-md-8 col-12">
+					<div class="row h-100">
+						<div class="col-12 col-md-6">
+							<div class="card card-body bg-all shadow-card border-0 h-100" >
+								<span class="h3 font-weight-bold" style="">
+									~{{ native_ad_alltime }}<span class="small align-top">*</span>
+								</span>
+		              Показов нативной рекламы за всё время
+							</div>
+						</div>
+
+		        <div class="col-12 col-md-6 mt-3 mt-md-0">
+		          <div class="card card-body bg-all shadow-card border-0 h-100" >
+		            <div class="h3 font-weight-bold" style="">
+		              ~{{ native_ad_day }}<span class="small align-top">*</span>
+		            </div>
+		              Показов нативной рекламы в среднем за сутки
+		          </div>
+		        </div>
+
+		        <div class="col-12 mt-3">
+		          <div class="card card-body bg-all shadow-card border-0 h-100" >
+		            <div class="h3 font-weight-bold" style="">
+		              ~{{ native_ad_today }}<span class="small align-top">*</span>
+		            </div>
+		              Показов нативной рекламы с начала суток
+		          </div>
+		        </div>
+					</div>
+				</div>
+				<div class="col-12 col-md-4 mt-3 mt-md-0 adv-img">
+					<img class="w-100 h-100 rounded shadow-card" style="object-fit: cover;" src="{{ BASE_PATH }}/assets/images/deal.svg" alt="">
+				</div>
+			</div>
+
+
+			<div class="row">
+				<div class="col-12 col-md-6 mt-3">
+          <div class="card card-body bg-all shadow-card border-0 h-100" >
+            <div class="h3 font-weight-bold" style="">
+              {{ users_count }}
+            </div>
+            Потенциальных подписчиков
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 mt-3">
+          <div class="card card-body bg-all shadow-card border-0 h-100" >
+            <div class="h3 font-weight-bold" style="">
+              {{ count_active_users }}
+            </div>
+            Столько пользователей получат рассылку
+          </div>
+        </div>
+
+				<div class="col-12 col-md-6 mt-3">
+          <div class="card card-body bg-all shadow-card border-0 h-100" >
+            <div class="h3 font-weight-bold" style="">
+              ~{{ users_can_read }}<span class="small align-top">*</span>
+            </div>
+            Столько пользователей прочитают сообщение
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 mt-3">
+          <div class="card card-body bg-all shadow-card border-0 h-100" >
+            <div class="h3 font-weight-bold" style="">
+              ~{{ users_link_click }}<span class="small align-top">*</span>
+            </div>
+            Столько пользователей перейдут по ссылке
+          </div>
+        </div>
+			</div>
+
+			<div class="small mt-3 mt-0 text-light-gray-botify"><b>*</b> Показатели являются приблезительными. Реальные показатели могут отличаться как в большую, так и в меньшую сторону. Оценить поведение пользователя достаточно сложно.</div>
+
+			<div class="">
+				<div class="h4 font-weight-bold mt-5 mb-3">
+					Прайс <a class="primary-link" href="tg://resolve?domain={{ BOT_USERNAME }}">@{{ BOT_USERNAME }}</a>
+				</div>
+				<div class="row">
+					<div class="col-12 col-lg-6 col-xl-4 card-hover">
+						<div class="card shadow-card border-0 h-100">
+							<div class="card-body">
+								<div class="row">
+									<div class="col">
+										<span class="">
+											<i class="fad fa-mail-bulk text-purple" style="font-size: 4rem;"></i>
+										</span>
+									</div>
+									<div class="col">
+										<span class="float-right text-muted">
+											Рассылка сообщений
+										</span>
+									</div>
+								</div>
+								<div class="row mt-3">
+									<div class="col">
+										<div class="h4 font-weight-bold">
+											0.10 ₽
+										</div>
+											Активный подписчик
+									</div>
+									<div class="col">
+										<div class="h4 font-weight-bold">
+											{{ price_mailing_ad }} ₽
+										</div>
+											Стоимость
+									</div>
+								</div>
+							</div>
+							<div class="card-footer">
+									<a href="#" class="btn btn-primary btn-sm float-right py-2" style="width: 110px;"><i class="far fa-ruble-sign"></i> Заказать</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-12 col-lg-6 col-xl-4 mt-3 mt-lg-0 card-hover">
+						<div class="card shadow-card border-0 h-100">
+							<div class="card-body">
+								<div class="row">
+									<div class="col">
+										<span class="">
+											<i class="fad fa-ad text-purple" style="font-size: 4rem;"></i>
+										</span>
+									</div>
+									<div class="col">
+										<span class="float-right text-muted">
+											Нативная реклама
+										</span>
+									</div>
+								</div>
+								<div class="row mt-3">
+									<div class="col">
+										<div class="h4 font-weight-bold">
+											0.10 ₽.
+										</div>
+											Подписчик
+									</div>
+									<div class="col">
+										<div class="h4 font-weight-bold">
+											{{ price_native_ad }} ₽.
+										</div>
+											Стоимость
+									</div>
+								</div>
+							</div>
+							<div class="card-footer">
+									<a href="#" class="btn btn-primary btn-sm float-right py-2" style="width: 110px;"><i class="far fa-ruble-sign"></i> Заказать</a>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="col-lg-12 col-xl-4 mt-3 mt-xl-0 card-hover">
+						<div class="card shadow-card border-0 h-100">
+							<div class="card-body">
+								<div class="row">
+									<div class="col">
+										<span class="">
+											<i class="fad fa-briefcase text-purple" style="font-size: 4rem;"></i>
+										</span>
+									</div>
+									<div class="col">
+										<span class="float-right text-muted">
+											Другое
+										</span>
+									</div>
+								</div>
+								<div class="row mt-3">
+									<div class="col">
+										<div class="h4 font-weight-bold">
+											Особое предложение?
+										</div>
+											Свяжитесь с нами, для уточнения деталей
+									</div>
+
+								</div>
+							</div>
+							<div class="card-footer">
+									<a href="tg://resolve?domain={{ AD_CONTACT }}" class="btn btn-primary btn-sm float-right py-2" style="width: 110px;"><i class="fas fa-envelope"></i> Связаться</a>
+							</div>
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+
+
+			<div class="h4 font-weight-bold mt-5 mb-3">
+				Почему реклама в боте — это выгодно? 🤔
+			</div>
+			<div class="card card-body border-0 shadow-card">
+				<div class="">
+					<ul class="pl-4 mt-3">
+						<li class="mt-2">	<b>Рассылка сообщений</b> — всем пользователям отправляется рекламное сообщение. Есть возможность прикрепить вложение (картинку, видео и т. п.), кнопки для быстрого перехода, а так же поддерживается форматирование.</li>
+						<p class="mt-3">
+							<b class="text-success">Плюсы рассылки:</b>
+							<ul>
+								<li>Все пользователи разом получат рекламное сообщение;</li>
+								<li>Быстрое привлечение подписчиков;</li>
+							</ul>
+						</p>
+						<p class="mt-3">
+							<b class="text-danger">Минусы рассылки:</b>
+							<ul>
+								<li>Рекламное сообщения получат только активные пользователи, новые пользователи и те, что разблокируют бота после рассылки, сообщение не увидят;</li>
+							</ul>
+						</p>
+
+						<!-- <a href="#" class="btn btn-primary btn-sm mb-2 py-2 px-3"><i class="fas fa-ruble-sign"></i> Купить рассылку ({{ price_mailing_ad }} ₽)</a> -->
+
+
+						<li class="mt-2"><b>Нативная реклама</b> — в отличии от рассылки, текст рекламы вставляется в любое сообщение которое отправит бот. Например, рекламу можно вставить в конец сообщения или отдельную кнопку.</li>
+						<p class="mt-3">
+							<b class="text-success">Плюсы нативной рекламы:</b>
+							<ul>
+								<li>Рекламный текст увидят все пользователи бота: текущие, новые, и те, что разблокируют бота;</li>
+								<li>Пользователь всегда будет видеть рекламный текст;</li>
+								<li>Рано или поздно пользователь перейдёт по сссылке + возможно он перейдёт по ссылке много раз;</li>
+							</ul>
+						</p>
+						<p class="mt-3">
+							<b class="text-danger">Минусы нативной рекламы:</b>
+							<ul>
+								<li>Рекламный текст в отличии от рассылки будут видеть только те пользователи, которые взаимодействуют с ботом;</li>
+							</ul>
+						</p>
+
+						<!-- <a href="#" class="btn btn-primary btn-sm py-2 px-3"><i class="fas fa-ruble-sign"></i> Купить нативную рекламу ({{ price_native_ad }} ₽)</a> -->
+					</ul>
+
+				</div>
+			</div>
+
+
+
+      <p class="h4 font-weight-bold mt-5 mb-3">Статистика сообщений</p>
+			<div class="row">
+				<div class="col-12 col-sm-6 col-lg-6 col-xl">
+					<div class="card card-body bg-all shadow-card border-0" data-toggle="tooltip" data-placement="bottom" title="Всего сообщений за всё время">
+						<div class="h3 font-weight-bold" style="">
+							{{ messages_count }}
+						</div>
+						Всего
+					</div>
+				</div>
+				<div class="col-lg-6 col-xl col-12 col-sm-6 mt-3 mt-sm-0 mt-lg-0" data-toggle="tooltip" data-placement="bottom" title="Сообщений за текущие сутки">
+					<div class="card card-body bg-today shadow-card border-0">
+						<div class="h3 font-weight-bold">
+							{{ messages_count_today }}
+						</div>
+						Сегодня
+					</div>
+				</div>
+				<div class="col-lg-6 col-xl col-12 col-lg-12 mt-3 mt-xl-0" data-toggle="tooltip" data-placement="bottom" title="Максимальное количество сообщений за сутки">
+					<div class="card card-body bg-max shadow-card border-0">
+						<div class="h3 font-weight-bold">
+							{{ messages_max }}
+						</div>
+						Максимум
+					</div>
+				</div>
+				<div class="col-lg-6 col-xl col-12 col-sm-6 mt-3 mt-xl-0">
+					<div class="card card-body bg-avg shadow-card border-0" data-toggle="tooltip" data-placement="bottom" title="Среднее количество сообщений в сутки">
+						<div class="h3 font-weight-bold">
+							{{ messages_avg }}
+						</div>
+						Среднее
+					</div>
+				</div>
+				<div class="col-lg-6 col-xl col-12 col-sm-6 mt-3 mt-xl-0">
+					<div class="card card-body bg-min shadow-card border-0" data-toggle="tooltip" data-placement="bottom" title="Минимальное количество сообщений за сутки">
+						<div class="h3 font-weight-bold">
+							{{ messages_min }}
+						</div>
+						Минимум
+					</div>
+				</div>
+			</div>
+
+
+
+
+			<p class="h4 font-weight-bold mt-5 mb-3">Статистика пользователей</p>
+			<div class="row">
+				<div class="col-12 col-sm-6 col-lg-6 col-xl">
+					<div class="card card-body bg-all shadow-card border-0" data-toggle="tooltip" data-placement="bottom" title="Всего пользователей в базе данных">
+						<div class="h3 font-weight-bold">
+							{{ users_count }}
+						</div>
+						Всего
+					</div>
+				</div>
+				<div class="col-lg-6 col-xl col-12 col-sm-6 mt-3 mt-sm-0 mt-lg-0 ">
+					<div class="card card-body bg-today shadow-card border-0" data-toggle="tooltip" data-placement="bottom" title="Новых пользователей за текущие сутки">
+						<div class="h3 font-weight-bold">
+							{{ users_count_today }}
+						</div>
+						Сегодня
+					</div>
+				</div>
+				<div class="col-lg-6 col-xl col-12 col-lg-12 mt-3 mt-xl-0">
+					<div class="card card-body bg-max shadow-card border-0" data-toggle="tooltip" data-placement="bottom" title="Максимальное количество новых пользователей за сутки">
+						<div class="h3 font-weight-bold">
+							{{ users_max }}
+						</div>
+						Максимум
+					</div>
+				</div>
+				<div class="col-lg-6 col-xl col-12 col-sm-6 mt-3 mt-xl-0">
+					<div class="card card-body bg-avg shadow-card border-0" data-toggle="tooltip" data-placement="bottom" title="Среднее количество новых пользователей в сутки">
+						<div class="h3 font-weight-bold">
+							{{ users_avg }}
+						</div>
+						Среднее
+					</div>
+				</div>
+				<div class="col-lg-6 col-xl col-12 col-sm-6 mt-3 mt-xl-0">
+					<div class="card card-body bg-min shadow-card border-0" data-toggle="tooltip" data-placement="bottom" title="Минимальное количество новых пользователей за сутки">
+						<div class="h3 font-weight-bold">
+							{{ users_min }}
+						</div>
+						Минимум
+					</div>
+				</div>
+			</div>
+
+			<div class="col-12 mt-4 mb-3 ml-0 pl-0">
+			<div class="small text-light-gray-botify mt-2">Стоимость рассылки формируется по <b>активным пользователям</b>, один активный пользователь = 10 копеек, получается <b>{{ count_active_users }} польз. * 0.10 ₽ = {{ price_mailing_ad }} ₽,</b> стоимость округляется в бóльшую сторону.</div>
+			<div class="small text-light-gray-botify mt-2">Стоимость нативной рекламы формируется по <b>всем пользователям</b>, один пользователь = 10 копеек, получается <b>{{ users_count }} польз. * 0.10 ₽ = {{ price_native_ad }} ₽,</b> стоимость округляется в бóльшую сторону.</div>
+			<div class="small text-light-gray-botify mt-2">Каждый новый пользователь <b>увеличивает</b> стоимость рекламы на 0.10 копеек.</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block js %}
+   <script type="text/javascript">
+
+   </script>
+{% endblock %}

@@ -1,0 +1,340 @@
+{% apply spaceless %}
+<!DOCTYPE html>
+<!--
+
+                        __________________________
+(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧	  _____/ Привет! Че делаешь тут? /
+                      \________________________/
+
+-->
+
+<html lang="ru">
+
+<head>
+  {% block head %}
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="theme-color" content="#3f434d"/>
+  <meta name="description" content="Botify Web Dashboard">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.min.css" integrity="sha512-LhZScx/m/WBAAHyiPnM+5hcsmCMjDDOgOqoT9wyIcs/QUPm6YxVNGZjQG5iP8dhWMWQAcUUTE3BkshtrlGbv2Q==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.0/animate.min.css" integrity="sha512-kb1CHTNhoLzinkElTgWn246D6pX22xj8jFNKsDmVwIQo+px7n1yjJUZraVuR/ou6Kmgea4vZXZeUDbqKtXkEMg==" crossorigin="anonymous" />
+  <link rel="stylesheet" rel="stylesheet" href="{{ BASE_PATH }}/assets/css/icons.css"  />
+  {% endblock %}
+
+	<title>{% block title %}{% endblock %}</title>
+
+	<style media="screen">
+  {% block css %}
+		body {
+			color: {{ COLOR_BODY_TEXT }};
+		}
+
+		.card-header,
+		.card-footer {
+			background-color: {{ COLOR_WHITE }};
+		}
+
+		.btn-primary {
+			background-color: {{ COLOR_PRIMARY }};
+      box-shadow: none !important;
+      border: 0;
+		}
+
+		.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+			background-color: {{ COLOR_PRIMARY_DARK }};
+      box-shadow: none !important;
+		}
+
+		.bg-light-gray {
+			background-color: {{ COLOR_BACKGROUND }};
+		}
+
+    .primary-link {
+      color: {{ COLOR_PRIMARY }};
+    }
+
+    .primary-link:hover, .primary-link:visited, .primary-link:active {
+      color: {{ COLOR_PRIMARY_DARK }};
+      text-decoration: none;
+    }
+
+    .card, .card-body, .card-header, .card-footer {
+      background-color: {{ COLOR_CARD_BACKGROUND }};
+    }
+
+    .text-light-gray-botify {
+			color: {{ COLOR_PRIMARY_LIGHT_TEXT }};
+		}
+
+		.bg-min {
+			background-color: {{ COLOR_PRIMARY_LIGHT }};
+			color: {{ COLOR_WHITE }};
+		}
+
+		.bg-max {
+			background-color: {{ COLOR_PRIMARY_DARK }};
+			color: {{ COLOR_WHITE }};
+		}
+
+		.bg-avg {
+			background-color: {{ COLOR_PRIMARY }};
+			color: {{ COLOR_WHITE }};
+		}
+
+		.bg-card-primary {
+			background-color: {{ COLOR_PRIMARY }};
+			color: {{ COLOR_WHITE }};
+		}
+
+		.bg-today {
+      background-color: {{ COLOR_CARD_BACKGROUND }};
+			color: inherit;
+		}
+
+    .btn-link {
+      color: {{ COLOR_PRIMARY }};
+    }
+
+    .btn-link:hover, .btn-link:active, .btn-link:visited {
+      color: {{ COLOR_PRIMARY_DARK }};
+    }
+
+    .badge-primary-light {
+      background-color: {{ COLOR_PRIMARY_LIGHT }};
+			color: {{ COLOR_WHITE }};
+    }
+
+		.bg-all {
+			background-color: {{ COLOR_CARD_BACKGROUND }};
+			color: inherit;
+		}
+
+		.card-link {
+			color: {{ COLOR_LEFT_MENU_ITEM }};
+		}
+
+		.card-link:hover {
+			color: {{ COLOR_WHITE }};
+		}
+
+		.list-group-item {
+
+		}
+
+		.list-group-item:hover {
+			background-color: {{ COLOR_PRIMARY }};
+			color: {{ COLOR_WHITE }};
+      border-radius: 3px;
+      z-index: 999;
+		}
+
+		.bg-purple {
+			background-color: {{ COLOR_WHITE }};
+		}
+
+		.text-light-gray {
+			color: {{ COLOR_TEXT_LIGHT_GRAY }};
+		}
+
+		.text-purple {
+			color: {{ COLOR_PRIMARY }};
+		}
+
+		.card-hover {
+			transition: all .2s ease-in-out;
+		}
+
+		.card-hover:hover {
+			-moz-transform: scale(1.03);
+			-webkit-transform: scale(1.03);
+			-o-transform: scale(1.03);
+			transform: scale(1.03);
+		}
+
+		.vcenter2 {
+		    display: inline-block;
+		    vertical-align: middle;
+		    float: none;
+		}
+
+		.vcenter {
+		  min-height: 100%;
+		  display: flex;
+		  align-items: center;
+		}
+
+		#back2Top {
+			width: 50px;
+		    line-height: 50px;
+		    overflow: hidden;
+		    z-index: 999;
+		    display: none;
+		    cursor: pointer;
+		    position: fixed;
+		    opacity: 0.9;
+		    bottom: 50px;
+		    right: 50px;
+		    background-color: {{ COLOR_PRIMARY }};
+		    border-radius: 4px;
+		    color: {{ COLOR_WHITE }};
+		    text-align: center;
+		    font-size: 24px;
+		    text-decoration: none;
+		}
+		#back2Top:hover {
+		    background-color: {{ COLOR_PRIMARY_DARK }};
+		    color: {{ COLOR_WHITE }};
+		}
+
+		.logo {
+			background-color: {{ COLOR_LOGO_BACKGROUND }};
+		    border-radius: 10px;
+		    color: {{ COLOR_WHITE }};
+		}
+
+		.bg-dark-botify {
+			background-color: {{ COLOR_LOGO_BACKGROUND }};
+		    color: {{ COLOR_WHITE }};
+		}
+
+		.overflow-dots {
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		::-webkit-scrollbar {
+		    width: 12px;
+		}
+
+		::-webkit-scrollbar-track {
+		    background: {{ COLOR_SCROLL_BAR_BACKGROUND }};
+		}
+
+		::-webkit-scrollbar-thumb {
+		    background-color: {{ COLOR_SCROLL_BAR }};
+		    border-radius: 3px;
+		}
+
+		::-webkit-scrollbar-thumb:hover {
+		    border-width: 1px 1px 1px 2px;
+		    background-color: {{ COLOR_PRIMARY }};
+		}
+
+		@media (min-width: 768px) {
+			.hide-md {
+				display: none;
+			}
+		}
+
+		.shadow-card{
+			box-shadow:0 0 1rem rgba(0,0,0,.10)!important
+		}
+
+    .pointer {
+      cursor: pointer;
+    }
+
+    .pre-print {
+      color: {{ COLOR_PRE_PRINT }};
+    }
+
+    .btn-purple {
+      background-color: {{ COLOR_PRIMARY }};
+      color: {{ COLOR_WHITE }};
+    }
+
+    .btn-purple:hover {
+      background-color: {{ COLOR_PRIMARY_DARK }};
+      color: {{ COLOR_WHITE }};
+    }
+
+    .just-link, .just-link:hover {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .tooltip > .tooltip-inner {
+      background-color: {{ COLOR_PRIMARY }} !important;
+    }
+    .arrow::before{
+      border-bottom-color: {{ COLOR_PRIMARY }}!important;
+    }
+    .arrow::before{
+      border-top-color:{{ COLOR_PRIMARY }}!important;
+    }
+
+    .z-index-999 {
+      z-index: 999;
+    }
+
+    @media (min-width: 1517px) {
+      .adv-img {
+        max-height: 242px;
+      }
+    }
+
+    .btn:focus, .btn:active {
+      box-shadow: none !important;
+      outline: none;
+    }
+    {% endblock %}
+	</style>
+</head>
+
+<body class="bg-light-gray">
+
+  {% block content %}
+
+  {% endblock %}
+
+  <a id="back2Top" title="Вверх" href="#"><i class="fas fa-chevron-up"></i></a>
+
+  {% block scripts %}
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" integrity="sha512-vBmx0N/uQOXznm/Nbkp7h0P1RfLSj0HQrFSzV8m7rOGyj30fYAOKHYvCNez+yM8IrfnW0TCodDEjRqf6fodf/Q==" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.33.1/sweetalert2.all.min.js" integrity="sha512-VXhyn2yTlj6eL4eipgFzMYQVOR+6R4sNi0r7spOGrzlhnWSX3V6NJfROAFWygj43k28MiOblwFYK44KLPpmIDA==" crossorigin="anonymous"></script>
+  {% endblock %}
+
+	<script type="text/javascript">
+    $(window).scroll(function() {
+        var height = $(window).scrollTop();
+        if (height > 100) {
+            $('#back2Top').fadeIn();
+        } else {
+            $('#back2Top').fadeOut();
+        }
+    });
+    $(document).ready(function() {
+        $("#back2Top").click(function(event) {
+            event.preventDefault();
+            $("html, body").animate({ scrollTop: 0 }, "slow");
+            return false;
+        });
+
+    });
+
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    })
+
+    $(document).on("click", document, function(){
+      $('[data-toggle="tooltip"]').tooltip('hide');
+    });
+  </script>
+
+  {% block js %}{% endblock %}
+</body>
+
+</html>
+<!--
+
+(っ˘̩╭╮˘̩)っ Закрывай давай
+
+-->
+{% endapply %}

@@ -1,0 +1,8 @@
+{
+    "require": {
+        "aethletic/botify": "^4.0",
+        "bramus/router": "~1.4",
+        "twig/twig": "^3.0",
+        "aethletic/container": "*"
+    }
+}

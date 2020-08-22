@@ -1,0 +1,20 @@
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark-botify sticky-top hide-md">
+	<a href="{{BASE_PATH}}" class="just-link mb-0 h2 font-weight-bold p-2 overflow-dots">
+		<i class="fad fa-robot"></i> botify.
+	</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+		<div class="navbar-nav text-center">
+			<a class="nav-item nav-link" href="{{ BASE_PATH }}/dashboard">Обзор</a>
+			<a class="nav-item nav-link" href="{{ BASE_PATH }}/messages">Сообщения</a>
+			<a class="nav-item nav-link" href="{{ BASE_PATH }}/users">Пользователи</a>
+			<a class="nav-item nav-link" href="{{ BASE_PATH }}/advertiser">Рекламодателям</a>
+			<a class="nav-item nav-link mt-3 mb-0 pb-0" href="{{ BASE_PATH }}/login">Авторизация</a>
+			<a class="nav-item nav-link mt-0" href="{{ BASE_PATH }}/settings">Настройки</a>
+		</div>
+	</div>
+</nav>
+{% endblock %}

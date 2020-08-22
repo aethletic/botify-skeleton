@@ -1,0 +1,9 @@
+Options +FollowSymLinks
+IndexIgnore */*
+RewriteEngine On
+
+RewriteBase /kino/web/
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^index/? index.php [L]

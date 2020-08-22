@@ -1,0 +1,333 @@
+{% extends "src/base.html" %}
+
+{% block title %}Пользователи - botify.{% endblock %}
+
+{% block head %}
+  {{ parent() }}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw==" crossorigin="anonymous" />
+{% endblock%}
+
+{% block content %}
+
+{{ block("navbar", "blocks/navbar.html") }}
+
+<div class="container-fluid">
+
+  {{ block("header", "blocks/header.html") }}
+
+  <div class="row">
+
+    {{ block("left_menu", "blocks/left_menu.html") }}
+
+    <div class="col-12 col-lg mb-3 animate__animated animate__fadeIn">
+      <p class="h4 font-weight-bold mt-3 mb-3">Пользователи</p>
+      <div class="row">
+        <div class="col-12 col-md-8">
+          <div class="row" id="users">
+            {% for user in users_data %}
+            <div class="col-12">
+              <div class="shadow-card bg-white rounded card-body mb-0 {%if loop.first == false%}mt-3{%endif%} card-hover ">
+
+                <span id="{{ user.user_id }}" class="">
+
+                  <div class="row">
+                    <div class="col">
+                      <div class="row no-gutters">
+
+                        <div class="col-auto font-weight-bold ml-0">
+                          <small><i class="fad fa-circle {%if user.is_active == 1%}text-success{%else%}text-danger{%endif%}"
+                            {%if user.is_active == 1%}data-toggle="tooltip" data-placement="bottom" title="Пользователь активен"{%else%}data-toggle="tooltip" data-placement="bottom" title="Пользователь заблокировал бота"{%endif%}
+                            ></i>
+                          </small>
+
+
+                          {% if CAN_VIEW or IS_ADMIN %}
+                          <span class="ml-2 font-weight-bold" style="font-size: 15px;">{{ user.full_name }}</span>
+                          {% else %}
+                          <span class="ml-2 font-weight-bold" style="font-size: 15px;">{{ user.full_name | hide_value }}</span>
+                          {% endif %}
+
+
+
+                        </div>
+
+                        <!-- <img class="mx-2" src="https://www.countryflags.io/{{ user.lang }}/shiny/16.png" width="16" height="16"> -->
+
+                        {% if user.ban == 1 %}
+                           <small class="col-12 col-lg-auto ml-lg-auto mt-lg-0 mt-2" data-html="true" data-toggle="tooltip" data-placement="bottom" title="Причина: <b>{{ user.ban_comment }}</b><br>Блокировка с <b>{{ user.ban_start | date("d.m.Y H:i:s") }}</b> по <b>{{ user.ban_end | date("d.m.Y H:i:s") }}</b>">
+                             <i class="fad fa-ban text-danger mr-1"></i> Блокировка до {{ user.ban_end | date("d.m.Y H:i:s") }}
+                           </small>
+                        {% endif %}
+
+
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row mt-2 no-gutters">
+
+                    <div class="col-auto">
+                      <small id="refresh" class="" data-user-id="{{ user.user_id }}"><i class="fas fa-sync-alt text-light-gray-botify pointer"
+                        data-toggle="tooltip" data-placement="bottom" title="Обновить"
+                        ></i>
+                      </small>
+
+                        <small class="text-light-gray-botify pointer mx-2" data-user-id="{{ user.user_id }}" id="edit"
+                        data-toggle="tooltip" data-placement="bottom" title="Управление"
+                        ><i class="fad fa-user-edit"></i></small>
+
+                        <small class="pointer mr-2 text-light-gray-botify" data-toggle="tooltip" data-placement="bottom" title="Сообщения">
+                        <a href="{{ BASE_PATH }}/messages/?user_id={{ user.user_id }}" class="just-link">
+                          <i class="fas fa-comment"></i>
+                        </a>
+                        </small>
+
+
+                      <small class="text-muted" data-toggle="tooltip" data-html="true" data-placement="bottom" title="Первое сообщение <b>{{ user.first_message | date("d.m.Y H:i:s") }}</b>">
+                        <i class="fad fa-calendar-alt"></i> {{ user.first_message | date("d.m.Y H:i:s") }}
+                      </small>
+
+
+                    </div>
+
+                    <div class="col-12 col-sm ml-0 ml-sm-2 mt-1 mt-sm-0">
+                      {% if user.username | trim  != "" %}
+
+                      {% if CAN_VIEW or IS_ADMIN %}
+                      <a class="just-link  text-primary" href="tg://resolve?domain={{ user.username }}" data-html="true" data-toggle="tooltip" data-placement="bottom" title="Открыть диалог в Telegram">
+                         <small><i class="fab fa-telegram-plane"></i> {{ user.username }}</small>
+                      </a>
+                      {% else %}
+                      <a class="just-link  text-primary" href="#" data-html="true" data-toggle="tooltip" data-placement="bottom" title="Открыть диалог в Telegram">
+                         <small><i class="fab fa-telegram-plane"></i> {{ user.username | hide_value }}</small>
+                      </a>
+                      {% endif %}
+
+
+                      {% endif %}
+                    </div>
+                  </div>
+
+                </span>
+
+
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="col-12 order-first order-md-last col-md-4 mb-3 mt-md-0">
+          <div class="sticky-top z-index-999" style="top: 17px;">
+            <div class="card card-body border-0 shadow-card">
+              <div class="row">
+
+                <div class="col-12">
+                  <label for="q" class="mb-1">Поиск</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fad fa-search"></i></div>
+                    </div>
+                      <input id="q" type="text" class="form-control" placeholder="Поиск по имени">
+                  </div>
+                </div>
+
+                <div class="col-12 mt-3">
+                  <label for="date" class="mb-1">Дата</label>
+                  <div class="input-group date">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fad fa-calendar-alt"></i></div>
+                    </div>
+                      <input id="date" type="text" class="form-control" placeholder="За всё время"><span class="input-group-addon"></span>
+                  </div>
+                </div>
+
+                <div class="col-12 mt-3">
+                  <label for="user" class="mb-1">Пользователь</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fad fa-user"></i></div>
+                    </div>
+                      <input id="user" type="text" class="form-control" placeholder="Идентификатор пользователя">
+                  </div>
+                </div>
+
+                <div class="col-12 mt-3">
+                  <button id="apply" class="btn btn-purple btn-block" type="button">Применить</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="user-modal" data-backdrop="static" data-keyboard="false" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Управление пользователем</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="user-data" class="modal-body">
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ru.min.js" integrity="sha512-tPXUMumrKam4J6sFLWF/06wvl+Qyn27gMfmynldU730ZwqYkhT2dFUmttn2PuVoVRgzvzDicZ/KgOhWD+KAYQQ==" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+  $('.input-group.date').datepicker({
+      format: "dd.mm.yyyy",
+      todayBtn: "linked",
+      clearBtn: true,
+      language: "ru",
+      autoclose: true,
+      todayHighlight: true
+  });
+
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const user_id = urlParams.get('user_id');
+
+  var inProgress = false;
+  var data = {};
+
+  data.page = 1;
+  data.date = '';
+  data.user = user_id;
+  data.q    = '';
+
+  $("#user").val(user_id);
+
+  if (user_id !== null) {
+    goEdit(user_id);
+  }
+
+  $(window).scroll(function() {
+    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 200 && !inProgress && data.page !== false) {
+      data.is_more = true;
+      $.ajax({
+              url: `{{ BASE_PATH }}/users`,
+              method: 'POST',
+              data: JSON.stringify(data),
+              beforeSend: function() {
+                  inProgress = true;
+              }
+          })
+          .done(function(res) {
+            res = JSON.parse(res);
+
+            if (res['nextPage'] == false) {
+                data.page = false;
+            } else {
+                data.page += 1;
+                $("#users").append(res['content']);
+            }
+
+            res = false;
+            inProgress = false;
+          });
+    }
+  });
+
+  $("#apply").click(function () {
+    data.page = 0;
+    data.date = $("#date").val();
+    data.user = $("#user").val();
+    data.q = $("#q").val();
+    data.is_more = false;
+
+    $.ajax({
+            url: `{{ BASE_PATH }}/users`,
+            method: 'POST',
+            data: JSON.stringify(data),
+            beforeSend: function() {
+                inProgress = true;
+            }
+        })
+        .done(function(res) {
+          res = JSON.parse(res);
+
+          if (res['nextPage'] == false) {
+              data.page = false;
+          } else {
+              data.page += 1;
+          }
+
+          $("#users").html(res['content']);
+
+          res = false;
+          inProgress = false;
+        });
+  });
+
+
+  $(document).on('click', '#refresh', function(event) {
+    var user_id = $(this).data('user-id');
+    $(this).toggleClass("rotate");
+    $.ajax({
+        url: `{{ BASE_PATH }}/api/v1/users/refresh/${user_id}`,
+        method: 'GET',
+      })
+      .done(function(res) {
+        res = JSON.parse(res);
+        if (res['ok'] == false) {
+          Swal.fire(
+            res['title'],
+            res['message'],
+            'error'
+          );
+        } else {
+          $(`#${user_id}`).html(res['content']);
+        }
+      });
+  });
+
+  $(document).on('click', '#edit', function(event) {
+    var user_id = $(this).data('user-id');
+    goEdit(user_id);
+  });
+
+  function goEdit(user_id) {
+    $.ajax({
+        url: `{{ BASE_PATH }}/api/v1/users/getById/${user_id}`,
+        method: 'GET',
+      })
+      .done(function(res) {
+        res = JSON.parse(res);
+
+        if (res['ok'] == false) {
+          Swal.fire(
+            res['title'],
+            res['message'],
+            'error'
+          );
+        } else {
+          $("#user-data").html(res['content']);
+          $("#user-modal").modal("toggle");
+        }
+      });
+  }
+
+
+
+</script>
+{% endblock %}

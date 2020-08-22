@@ -1,0 +1,89 @@
+{% extends "src/base.html" %}
+{% block title %}Авторизация - botify.{% endblock %}
+{% block content %}
+	{{ block("navbar", "blocks/navbar.html") }}
+	<div class="container-fluid">
+		{{ block("header", "blocks/header.html") }}
+		<div class="d-flex justify-content-center align-items-center">
+			<div class="col-sm-6 col-lg-5 col-xl-3 mt-3  d-flex justify-content-center m-0 p-0">
+
+				<div class=" row w-100" style="">
+					<div class="col-12 p-0">
+						<p class="h4 font-weight-bold">Авторизация</p>
+					</div>
+					<div class="col-12 p-0">
+						<div class="card border-0 shadow-card">
+								<div class="card-body">
+
+									<label class="mb-0 small" for="key">Ключ доступа</label>
+									<div class="input-group date">
+										<div class="input-group-prepend">
+											<div class="input-group-text"><i class="fad fa-unlock-alt"></i></div>
+										</div>
+											<input id="key" class="form-control" type="password" placeholder="Ключ"><span class="input-group-addon"></span>
+									</div>
+
+									<label class="mb-0 small mt-3" for="time">Время сеанса</label>
+									<div class="input-group date">
+										<div class="input-group-prepend">
+											<div class="input-group-text"><i class="fad fa-clock"></i></div>
+										</div>
+											<input id="time" class="form-control" type="text" placeholder="Время сеанса (мин.)"><span class="input-group-addon"></span>
+									</div>
+
+									<label class="mb-0 small mt-3" for="type">Тип доступа</label>
+									<select id="type" class="form-control" name="">
+										<option value="view" selected="selected">Просмотр</option>
+										<option value="admin">Администрирование</option>
+									</select>
+
+									<button id="create" class="btn btn-primary btn-block mt-4" type="button" name="button">Сгенерировать</button>
+								</div>
+
+						</div>
+					</div>
+
+					<div class="col-12 p-0" style="max-width: 100%;">
+						<div id="link" class="mt-3">
+
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+
+	</div>
+{% endblock %}
+{% block js %}
+	<script type="text/javascript">
+	$("#create").click(function () {
+		var data = {};
+		data.type = $("#type option:selected").val();
+		data.time = $("#time").val();
+		data.key = $("#key").val();
+
+		$("#key").val('');
+
+		$.ajax({
+			url: `{{ BASE_PATH }}/auth/create`,
+			method: 'POST',
+			data: JSON.stringify(data),
+		})
+		.done(function(res) {
+			res = JSON.parse(res);
+
+			if (res['ok'] == false) {
+				Swal.fire(
+					res['title'],
+					res['message'],
+					'error'
+				);
+			} else {
+				$("#link").html(res['content']);
+			}
+		});
+	});
+	</script>
+{% endblock %}

@@ -1,0 +1,4 @@
+/vendor
+*.log
+config/bot.php
+config/web.php

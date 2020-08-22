@@ -1,0 +1,102 @@
+{% block header %}
+{% if users_data is empty %}
+<div class="col-12">
+
+    Пользователи не найдены, попробуйте изменить настройки фильтра.
+
+</div>
+{% else %}
+  {% for user in users_data %}
+  <div class="col-12">
+    <div class="shadow-card bg-white rounded card-body mb-0 {%if loop.first == false or is_more == true%}mt-3{%endif%} card-hover ">
+
+      <span id="{{ user.user_id }}" class="">
+
+        <div class="row">
+          <div class="col">
+            <div class="row no-gutters">
+
+              <div class="col-auto font-weight-bold ml-0">
+                <small><i class="fad fa-circle {%if user.is_active == 1%}text-success{%else%}text-danger{%endif%}"
+                  {%if user.is_active == 1%}data-toggle="tooltip" data-placement="bottom" title="Пользователь активен"{%else%}data-toggle="tooltip" data-placement="bottom" title="Пользователь заблокировал бота"{%endif%}
+                  ></i>
+                </small>
+
+
+                {% if CAN_VIEW or IS_ADMIN %}
+                <span class="ml-1 font-weight-bold" style="font-size: 15px;">{{ user.full_name }}</span>
+                {% else %}
+                <span class="ml-1 font-weight-bold" style="font-size: 15px;">{{ user.full_name | hide_value }}</span>
+                {% endif %}
+
+
+
+              </div>
+
+              <!-- <img class="mx-2" src="https://www.countryflags.io/{{ user.lang }}/shiny/16.png" width="16" height="16"> -->
+
+              {% if user.ban == 1 %}
+                 <small class="col-12 col-lg-auto ml-lg-auto mt-lg-0 mt-2" data-html="true" data-toggle="tooltip" data-placement="bottom" title="Причина: <b>{{ user.ban_comment }}</b><br>Блокировка с <b>{{ user.ban_start | date("d.m.Y H:i:s") }}</b> по <b>{{ user.ban_end | date("d.m.Y H:i:s") }}</b>">
+                   <i class="fad fa-ban text-danger mr-1"></i> Блокировка до {{ user.ban_end | date("d.m.Y H:i:s") }}
+                 </small>
+              {% endif %}
+
+
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row mt-2 no-gutters">
+
+          <div class="col-auto">
+            <small id="refresh" data-user-id="{{ user.user_id }}"><i class="fas fa-sync-alt text-light-gray-botify pointer"
+              data-toggle="tooltip" data-placement="bottom" title="Обновить"
+              ></i>
+            </small>
+
+              <small class="text-light-gray-botify pointer mx-1" data-user-id="{{ user.user_id }}" id="edit"
+              data-toggle="tooltip" data-placement="bottom" title="Управление"
+              ><i class="fad fa-user-edit"></i></small>
+
+              <small class="pointer mr-1 text-light-gray-botify" data-toggle="tooltip" data-placement="bottom" title="Сообщения">
+              <a href="{{ BASE_PATH }}/messages/?user_id={{ user.user_id }}" class="just-link">
+                <i class="fas fa-comment"></i>
+              </a>
+              </small>
+
+
+            <small class="text-muted" data-toggle="tooltip" data-html="true" data-placement="bottom" title="Первое сообщение <b>{{ user.first_message | date("d.m.Y H:i:s") }}</b>">
+              <i class="fad fa-calendar-alt"></i> {{ user.first_message | date("d.m.Y H:i:s") }}
+            </small>
+
+
+          </div>
+
+          <div class="col-12 col-sm ml-0 ml-sm-2 mt-1 mt-sm-0">
+            {% if user.username | trim  != "" %}
+
+            {% if CAN_VIEW or IS_ADMIN %}
+            <a class="just-link  text-primary" href="tg://resolve?domain={{ user.username }}" data-html="true" data-toggle="tooltip" data-placement="bottom" title="Открыть диалог в Telegram">
+               <small><i class="fab fa-telegram-plane"></i> {{ user.username }}</small>
+            </a>
+            {% else %}
+            <a class="just-link  text-primary" href="tg://resolve?domain=aethletic" data-html="true" data-toggle="tooltip" data-placement="bottom" title="Открыть диалог в Telegram">
+               <small><i class="fab fa-telegram-plane"></i> {{ user.username | hide_value }}</small>
+            </a>
+            {% endif %}
+
+
+            {% endif %}
+          </div>
+        </div>
+
+      </span>
+
+
+    </div>
+  </div>
+  {% endfor %}
+{% endif %}
+
+{% endblock %}

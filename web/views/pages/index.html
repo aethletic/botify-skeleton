@@ -1,0 +1,272 @@
+{% extends "src/base.html" %}
+
+{% block title %}Обзор - botify.{% endblock %}
+
+{% block content %}
+
+{{ block("navbar", "blocks/navbar.html") }}
+
+<div class="container-fluid">
+
+	{{ block("header", "blocks/header.html") }}
+
+	<div class="row">
+
+		{{ block("left_menu", "blocks/left_menu.html") }}
+
+		<div class="col-12 col-lg mb-3 animate__animated animate__fadeIn">
+			<p class="h4 font-weight-bold mt-3 mb-3">Сообщения</p>
+			<div class="row">
+				<div class="col-12 col-sm-6 col-lg-6 col-xl">
+					<div class="card card-body bg-all shadow-card border-0 card-hover" data-toggle="tooltip" data-placement="bottom" title="Всего сообщений за всё время">
+						<a href="{{ BASE_PATH }}/messages" class="just-link">
+						<div class="h3 font-weight-bold" style="">
+							{{ messages_count }} <i class="fas fa-arrow-right text-light-gray mt-1 float-right card-icon small" data-toggle="tooltip" data-placement="bottom" title="Перейти к сообщениям"></i>
+						</div>
+						Всего
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-6 col-xl col-12 col-sm-6 mt-3 mt-sm-0 mt-lg-0" data-toggle="tooltip" data-placement="bottom" title="Сообщений за текущие сутки">
+					<div class="card card-body bg-today shadow-card border-0">
+						<div class="h3 font-weight-bold">
+							{{ messages_count_today }}
+						</div>
+						Сегодня
+					</div>
+				</div>
+				<div class="col-lg-6 col-xl col-12 col-lg-12 mt-3 mt-xl-0" data-toggle="tooltip" data-placement="bottom" title="Максимальное количество сообщений за сутки">
+					<div class="card card-body bg-max shadow-card border-0">
+						<div class="h3 font-weight-bold">
+							{{ messages_max }}
+						</div>
+						Максимум
+					</div>
+				</div>
+				<div class="col-lg-6 col-xl col-12 col-sm-6 mt-3 mt-xl-0">
+					<div class="card card-body bg-avg shadow-card border-0 " data-toggle="tooltip" data-placement="bottom" title="Среднее количество сообщений в сутки">
+						<div class="h3 font-weight-bold">
+							{{ messages_avg }}
+						</div>
+						Среднее
+					</div>
+				</div>
+				<div class="col-lg-6 col-xl col-12 col-sm-6 mt-3 mt-xl-0">
+					<div class="card card-body bg-min shadow-card border-0 " data-toggle="tooltip" data-placement="bottom" title="Минимальное количество сообщений за сутки">
+						<div class="h3 font-weight-bold">
+							{{ messages_min }}
+						</div>
+						Минимум
+					</div>
+				</div>
+			</div>
+
+			<p class="h6 font-weight-bold  mt-5">Последние сообщения</p>
+			<div class="row">
+				<div class="col-12 col-lg">
+
+					<div class="row h-100">
+						{% for update in messages_data %}
+						<div class="col-12">
+							<div class="pointer card-hover shadow-card rounded card-body mb-0 {%if loop.first == false%}mt-4{%endif%}" data-toggle="tooltip" data-html="true" data-placement="bottom" title="Показать все сообщения пользователя">
+								<a href="{{ BASE_PATH }}/messages/?user_id={{ update.user_id }}" class="just-link">
+								<div class="row">
+									<div class="col-auto">
+										<p class="h3 vcenter text-purple"><i class="fad fa-comment"></i></p>
+									</div>
+									<div class="col">
+										<div class="row no-gutters">
+											<div class="col-auto font-weight-bold">
+												{% if CAN_VIEW or IS_ADMIN %}
+													{{ update.user }}
+												{% else %}
+													{{ update.user | hide_value }}
+												{% endif %}
+											</div>
+											<small class="col-lg-12 col-xl-auto  ml-xl-auto text-muted">
+												<i class="fad fa-calendar-alt"></i> {{ update.date | date("d.m.Y H:i:s") }}
+											</small>
+											<small class="col-12 mt-2 mt-xl-0 text-muted">
+												{% if CAN_VIEW or IS_ADMIN %}
+													{{ update.text }}
+												{% else %}
+													{{ update.text | hide_value }}
+												{% endif %}
+											</small>
+										</div>
+									</div>
+								</div>
+								</a>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+
+				<div class="col-md-12 col-xl mt-3 mt-xl-0">
+					<div class="h-100 card card-body border-0 shadow-card justify-content-center">
+						<canvas id="MessagesChart"></canvas>
+					</div>
+				</div>
+			</div>
+
+			<p class="h4 font-weight-bold mt-5 mb-3">Пользователи</p>
+			<div class="row">
+				<div class="col-12 col-sm-6 col-lg-6 col-xl">
+					<div class="card card-body bg-all shadow-card border-0 card-hover" data-toggle="tooltip" data-placement="bottom" title="Всего пользователей в базе данных">
+						<a href="{{ BASE_PATH }}/users" class="just-link">
+						<div class="h3 font-weight-bold">
+							{{ users_count }} <i class="fas fa-arrow-right text-light-gray mt-1 float-right" data-toggle="tooltip" data-placement="bottom" title="Перейти к пользователям"></i>
+						</div>
+						Всего
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-6 col-xl col-12 col-sm-6 mt-3 mt-sm-0 mt-lg-0 ">
+					<div class="card card-body bg-today shadow-card border-0 " data-toggle="tooltip" data-placement="bottom" title="Новых пользователей за текущие сутки">
+						<div class="h3 font-weight-bold">
+							{{ users_count_today }}
+						</div>
+						Сегодня
+					</div>
+				</div>
+				<div class="col-lg-6 col-xl col-12 col-lg-12 mt-3 mt-xl-0">
+					<div class="card card-body bg-max shadow-card border-0 " data-toggle="tooltip" data-placement="bottom" title="Максимальное количество новых пользователей за сутки">
+						<div class="h3 font-weight-bold">
+							{{ users_max }}
+						</div>
+						Максимум
+					</div>
+				</div>
+				<div class="col-lg-6 col-xl col-12 col-sm-6 mt-3 mt-xl-0">
+					<div class="card card-body bg-avg shadow-card border-0 " data-toggle="tooltip" data-placement="bottom" title="Среднее количество новых пользователей в сутки">
+						<div class="h3 font-weight-bold">
+							{{ users_avg }}
+						</div>
+						Среднее
+					</div>
+				</div>
+				<div class="col-lg-6 col-xl col-12 col-sm-6 mt-3 mt-xl-0">
+					<div class="card card-body bg-min shadow-card border-0 " data-toggle="tooltip" data-placement="bottom" title="Минимальное количество новых пользователей за сутки">
+						<div class="h3 font-weight-bold">
+							{{ users_min }}
+						</div>
+						Минимум
+					</div>
+				</div>
+			</div>
+
+
+			<div class="row ">
+				<div class="col-12 col-md-6">
+
+				</div>
+				<div class="col-lg-12 col-xl-6 h6 font-weight-bold mt-5">
+						Последние пользователи
+				</div>
+				<div class="col-md-12 col-xl mt-xl-0 order-first order-xs-first order-sm-first order-md-first order-lg-first order-xl-1 mt-3 mt-xl-0">
+					<div class="card card-body border-0 shadow-card h-100 justify-content-center">
+						<canvas id="UsersChart"></canvas>
+					</div>
+				</div>
+
+
+				<div class="col-12 col-lg  mt-xl-0 order-lg-2 order-xl-2">
+					<div class="row">
+						{% for user in users_data %}
+						<div class="col-12">
+							<div class="pointer card-hover card-body shadow-card rounded {%if loop.first == false%}mt-4{%endif%}" data-toggle="tooltip" data-html="true" data-placement="bottom" title="Управление пользователем">
+								<a href="{{ BASE_PATH }}/users/?user_id={{ user.user_id }}" class="just-link">
+								<div class="row">
+									<div class="col-auto">
+										<div class="h3 m-0 vcenter text-muted">
+											#{{ user.id }}
+										</div>
+									</div>
+									<div class="col">
+										<div class="row no-gutters">
+											<div class="col-12 font-weight-bold">
+												{% if CAN_VIEW or IS_ADMIN %}
+												{{ user.full_name }}
+												{% else %}
+													{{ user.full_name | hide_value }}
+												{% endif %}
+											</div>
+											<small class="col-12 col-xl-auto text-muted">
+												<i class="fad fa-calendar-alt"></i> {{ user.first_message | date("d.m.Y H:i:s") }}
+											</small>
+										</div>
+									</div>
+								</div>
+								</a>
+							</div>
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block js %}
+   <script type="text/javascript">
+    var ctx = document.getElementById('MessagesChart').getContext('2d');
+   	var myChart = new Chart(ctx, {
+   		type: 'line',
+   		data: {
+   			labels: {{ messages_data_dates | raw }},
+   			datasets: [{
+   				label: 'Новые сообщения',
+   				data: {{ messages_data_vars | raw }},
+   				backgroundColor: [
+   					'{{ COLOR_PRIMARY }}'
+   				],
+   				borderColor: [
+   					'{{ COLOR_PRIMARY }}'
+   				],
+   				borderWidth: 1
+   			}]
+   		},
+   		options: {
+   			scales: {
+   				yAxes: [{
+   					ticks: {
+   						beginAtZero: true
+   					}
+   				}]
+   			}
+   		}
+   	});
+
+   	var ctx = document.getElementById('UsersChart').getContext('2d');
+   	var myChart = new Chart(ctx, {
+   		type: 'line',
+   		data: {
+   			labels: {{ users_data_dates | raw }},
+   			datasets: [{
+   				label: 'Новые пользователи',
+   				data: {{ users_data_vars | raw }},
+   				backgroundColor: [
+   					'{{ COLOR_PRIMARY }}'
+   				],
+   				borderColor: [
+   					'{{ COLOR_PRIMARY }}'
+   				],
+   				borderWidth: 1
+   			}]
+   		},
+   		options: {
+   			scales: {
+   				yAxes: [{
+   					ticks: {
+   						beginAtZero: true
+   					}
+   				}]
+   			}
+   		}
+   	});
+
+   </script>
+{% endblock %}
