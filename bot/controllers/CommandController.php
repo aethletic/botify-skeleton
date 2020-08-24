@@ -4,11 +4,10 @@ class CommandController
 {
   public static function start($bot)
   {
-    // For tracking ad source flow
     if (sizeof($cmd = $bot->parse()) == 2 && $bot->user->isNewUser) {
       $bot->user->update(['from_source' => $cmd[1]]);
     }
-
+    
     return $bot->say($bot->l('COMMAND_START'));
   }
 

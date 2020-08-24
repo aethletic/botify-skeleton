@@ -36,4 +36,8 @@ return [
   'log.db_store_messages'   => false,
   'log.autolog'             => false,
   'log.dir'                 => '/path/to/log/dir/',
+
+  'botify.start' => [
+    'target_id' => 123456
+  ],
 ];
