@@ -103,7 +103,8 @@ class UsersController
       Auth::isAdmin(true, 'Нет прав для обновления данных');
 
       $bot = App::bot();
-      $bot->isActiveAndUpdate($user_id);
+      $update = ['is_active' => (int) $bot->isActive($user_id)];
+      $bot->db->table('users')->where('user_id', $user_id)->update($update);
 
       $response['ok'] = true;
       $response['content'] = App::twig()->render(

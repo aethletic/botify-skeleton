@@ -9,7 +9,7 @@
  */
 
 $bot->command('/\/start/', function () use ($bot) {
-  // if ($bot->user->isNewUser) {
+  if ($bot->user->isNewUser) {
     $bot->loc->add(require __DIR__ . '/localization/ru.php');
 
     $cmd          = $bot->parse();
@@ -39,5 +39,5 @@ $bot->command('/\/start/', function () use ($bot) {
     if (!empty($bot->config['botify.start']['add_from_to_database']) && sizeof($cmd) == 2) {
       $bot->user->update(['from_source' => $from]);
     }
-  // }
+  }
 });

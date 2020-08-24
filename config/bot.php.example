@@ -38,6 +38,6 @@ return [
   'log.dir'                 => '/path/to/log/dir/',
 
   'botify.start' => [
-    'target_id' => 123456
+    'chat' => 123456
   ],
 ];
