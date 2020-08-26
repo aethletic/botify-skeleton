@@ -17,6 +17,9 @@ App::route()->post('/messages', 'MessagesController::more');
 // Реклама
 App::route()->get('/advertiser', 'AdvertiserController::index');
 
+// Настройки
+App::route()->get('/settings', 'SettingsController::index');
+
 // API
 App::route()->get('/api/v1/users/getById/{user_id}', 'UsersController::getById');
 App::route()->post('/api/v1/users/update', 'UsersController::update');

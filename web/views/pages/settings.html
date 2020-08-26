@@ -1,0 +1,74 @@
+{% extends "src/base.html" %}
+
+{% block title %}Сообщения - botify.{% endblock %}
+
+{% block head %}
+  {{ parent() }}
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css"
+    integrity="sha512-mSYUmp1HYZDFaVKK//63EcZq4iFWFjxSL+Z3T/aCt4IO9Cejm03q3NKKYN6pFQzY0SBOr8h+eCIAZHPXcpZaNw=="
+    crossorigin="anonymous"/>
+  {% endblock%}
+
+  {% block content %}
+
+    {{ block("navbar", "blocks/navbar.html") }}
+
+    <div class="container-fluid">
+
+      {{ block("header", "blocks/header.html") }}
+
+      <div class="row">
+
+        {{ block("left_menu", "blocks/left_menu.html") }}
+
+        <div class="col-12 col-lg mb-3 animate__animated animate__fadeIn">
+          <p class="h4 font-weight-bold mt-3 mb-3">Настройки</p>
+          <div class="row">
+
+            <div class="col-6">
+              <div class="row">
+
+
+                  <div class="col-12">
+                    <label for="bot-token" class="mb-0 small">Токен:</label>
+                    <input id="bot-token" class="form-control" type="text" placeholder="1234567890:BOT_TOKEN" value="">
+                  </div>
+
+                  <div class="col">
+                    <a href="#" class="btn btn-block btn-purple btn-sm py-2 px-4 mt-3"><i class="fal fa-wrench"></i> Установить</a>
+                  </div>
+                  <div class="col">
+                    <a href="#" class="btn btn-block btn-purple btn-sm py-2 px-4 mt-3"><i class="fal fa-info"></i> Информация</a>
+                  </div>
+                  <div class="col">
+                    <a href="#" class="btn btn-block btn-danger btn-sm py-2 px-4 mt-3"><i class="fal fa-trash"></i> Удалить</a>
+                  </div>
+
+
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+{% endblock %}
+
+{% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous"></script>
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.ru.min.js"
+integrity="sha512-tPXUMumrKam4J6sFLWF/06wvl+Qyn27gMfmynldU730ZwqYkhT2dFUmttn2PuVoVRgzvzDicZ/KgOhWD+KAYQQ=="
+crossorigin="anonymous"></script>
+
+<script type="text/javascript"></script>
+{% endblock %}

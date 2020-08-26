@@ -42,7 +42,7 @@ $app->set('db', true, function () use ($app) {
     'host'      => $app->config['bot']['database.host'],
     'database'  => $app->config['bot']['database.database'],
     'username'  => $app->config['bot']['database.username'],
-    'password'  =>$app->config['bot']['database.password'],
+    'password'  => $app->config['bot']['database.password'],
     'charset'   => $app->config['bot']['database.charset'],
     'collation' => $app->config['bot']['database.collation'],
     'lazy'      => $app->config['bot']['database.lazy'],

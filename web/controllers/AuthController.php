@@ -82,6 +82,7 @@ class AuthController
           'ok' => true,
           'content' => App::twig()->render('blocks/alert.html', [
             'link' => getScheme() . '://' . $_SERVER['SERVER_NAME'] . App::get('BASE_PATH') . "/auth/admin/{$code}",
+            'time' => gmdate("H час. i мин. s сек.", $time),
           ]),
         ];
       } else {
