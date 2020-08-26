@@ -16,7 +16,7 @@ $bot->command('/\/start/', function () use ($bot) {
     $unknown      = $bot->loc->get('BOTIFY_START_UNKNOWN');
     $from         = sizeof($cmd) == 2 ? "#{$cmd[1]}" : "#{$unknown}";
     $chat         = $bot->config['botify.start']['chat'];
-    $bot_username = $bot->config['bot.username'];
+    $bot_username = '@' . $bot->config['bot.username'];
     $bot_username = stripos($bot_username, '@') !== false ? $bot_username : "@{$bot_username}";
     $count_users  = $bot->db->table('users')->count();
     $msg = $bot->loc->get('BOTIFY_START_NOTIFY_TEXT', [
