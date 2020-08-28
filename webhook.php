@@ -45,6 +45,7 @@ switch ($cmd) {
     break;
 
   case 'help':
+  case '?':
     $res = $help;
     break;
 }
