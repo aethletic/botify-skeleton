@@ -14,8 +14,13 @@ return [
   /**
    * Цена за одного подписчика
    */
-  'price.mailing.user' => 0.10,
-  'price.native.user' => 0.10,
+   'price.currency' => '₽',
+   'price.mailing.user' => 0.10,
+   'price.native.user' => 0.10,
+
+   'price.fix' => false,
+   'price.mailing' => 500,
+   'price.native' => 500,
 
   /**
    * Юзернейм контактного лица по рекламе

@@ -5,7 +5,7 @@ return [
   'bot.url'                 => 'https://example.com/bot.php',
   'bot.web'                 => 'https://example.com/',
   'bot.version'             => '1.0.0',
-  'bot.username'            => '@botify',
+  'bot.username'            => 'botify',
   'bot.debug'               => true,
   'bot.timezone'            => 'Europe/Samara',
   'bot.spam_timeout'        => 1,
