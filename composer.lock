@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "aethletic/botify",
-            "version": "4.0.3",
+            "version": "4.0.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aethletic/botify.git",
-                "reference": "61d7c56fcc547d385a6065131578bc4433df8acc"
+                "reference": "a8b5f0ca163edb51c6ae645e0da3bb6093018681"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aethletic/botify/zipball/61d7c56fcc547d385a6065131578bc4433df8acc",
-                "reference": "61d7c56fcc547d385a6065131578bc4433df8acc",
+                "url": "https://api.github.com/repos/aethletic/botify/zipball/a8b5f0ca163edb51c6ae645e0da3bb6093018681",
+                "reference": "a8b5f0ca163edb51c6ae645e0da3bb6093018681",
                 "shasum": ""
             },
             "require": {
@@ -43,7 +43,7 @@
                 }
             ],
             "description": "Simple but powerful Telegram Bot API library for PHP.",
-            "time": "2020-08-19T18:01:02+00:00"
+            "time": "2020-08-28T18:15:38+00:00"
         },
         {
             "name": "aethletic/container",

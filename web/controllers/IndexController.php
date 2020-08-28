@@ -33,10 +33,10 @@ class IndexController
             'users_max' => number_format(Users::getMax(), 0, ',', ' '),
             'users_min' => number_format(Users::getMin(), 0, ',', ' '),
             'users_avg' => number_format(round(Users::getAvg()), 0, ',', ' '),
-            'messages_data_dates' => json_encode($messageData['date'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_QUOT),
-            'messages_data_vars' => json_encode($messageData['count'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_QUOT),
-            'users_data_dates' => json_encode($userData['date'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_QUOT),
-            'users_data_vars' => json_encode($userData['count'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_QUOT),
+            'messages_data_dates' => !empty($messageData['date']) ? json_encode($messageData['date'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_QUOT) : '',
+            'messages_data_vars' => !empty($messageData['count']) ? json_encode($messageData['count'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_QUOT) : '',
+            'users_data_dates' => !empty($userData['date']) ? json_encode($userData['date'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_QUOT) : '',
+            'users_data_vars' => !empty($userData['count']) ? json_encode($userData['count'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_QUOT) : '',
         ]);
     }
 }

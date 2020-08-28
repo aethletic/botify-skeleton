@@ -21,8 +21,8 @@ class UsersController
             'users_min' => number_format(Users::getMin(), 0, ',', ' '),
             'users_avg' => number_format(round(Users::getAvg()), 0, ',', ' '),
             'messages_count' => number_format(Messages::getCountAll(), 0, ',', ' '),
-            'users_data_dates' => json_encode($userData['date'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_QUOT),
-            'users_data_vars' => json_encode($userData['count'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_QUOT),
+            'users_data_dates' => !empty($userData['date']) ? json_encode($userData['date'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_QUOT) : '',
+            'users_data_vars' => !empty($userData['count']) ? json_encode($userData['count'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_QUOT) : '',
         ]);
     }
 

@@ -21,8 +21,8 @@ class MessagesController
             'messages_min' => number_format(Messages::getMin(), 0, ',', ' '),
             'messages_avg' => number_format(round(Messages::getAvg()), 0, ',', ' '),
             'users_count' => number_format(Users::getCountUsers(), 0, ',', ' '),
-            'messages_data_dates' => json_encode($messageData['date'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_QUOT),
-            'messages_data_vars' => json_encode($messageData['count'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_QUOT),
+            'messages_data_dates' => !empty($messageData['date']) ? json_encode($messageData['date'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_QUOT) : '',
+            'messages_data_vars' => !empty($messageData['count']) ? json_encode($messageData['count'], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_QUOT) : '',
         ]);
     }
 
